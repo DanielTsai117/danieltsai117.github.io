@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="https://pyscript.net/releases/2023.05.1/pyscript.css"/>
+    <script defer src="https://pyscript.net/releases/2023.05.1/pyscript.js"></script>
+
+</head>
+<body>
+   <py-config>
+      packages = ["pandas"]
+    </py-config>
+<div class="row overflow-hidden" id="content">
+    <div class="col mh-100 float-left" id="main">
+        <div id="fileinput"></div>
+        <input type="file" name="upload" id="upload">
+    </div>
+</div>
+
+<py-script>
+    from js import document
+    from io import BytesIO
+    import pandas as pd
+
+    from pyscript import when
+
+    @when('change', '#upload')
+    async def processFile(*args):
+        csv_file = document.getElementById('upload').files.item(0)
+
+        array_buf = await csv_file.arrayBuffer() # Get arrayBuffer from file
+        file_bytes = array_buf.to_bytes() # convert to raw bytes array 
+        csv_file = BytesIO(file_bytes) # Wrap in Python BytesIO file-like object
+
+        # Read the CSV file into a Pandas DataFrame
+        df = pd.read_csv(csv_file)
+
+        # Convert each row to a list and store them in an array
+        rows_array = df.values.tolist()
+
+        # Now, 'rows_array' contains each row of the CSV file as a list
+        print(rows_array)
+</py-script>
+
+</body>
+</html>
