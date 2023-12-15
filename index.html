@@ -1,83 +1,87 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <title>抽籤計算機!</title>
 
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
-    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.9.3/dist/js/tabulator.js"></script>
-    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.2.js"></script>
-    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.2.min.js"></script>
-    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.2.min.js"></script>
-    <script type="text/javascript" src="https://unpkg.com/@holoviz/panel@0.13.0/dist/panel.min.js"></script>
-    <script type="text/javascript">
-      Bokeh.set_log_level("info");
-    </script>
+    <link rel="stylesheet" href="https://pyscript.net/releases/2023.05.1/pyscript.css"/>
+    <script defer src="https://pyscript.net/releases/2023.05.1/pyscript.js"></script>
 
-    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
-    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
-    <py-env>
-        - numpy
-        - pandas
-        - panel==0.13.1a2
-    </py-env>
 </head>
-
 <body>
-    <h1>Upload csv</h1>
+   <py-config>
+      packages = ["pandas"]
+    </py-config>
+<div class="row overflow-hidden" id="content">
+    <h1 class="text-center"> 我是一個~~抽籤計算機!  </h1><br />
+    <h2> 行前說明： <br />
+        本程式最佳的使用場景，是在  <br />
+        1. 要抽籤的名單中，具有［如果一人有多票，都只有一票的權利］的狀況  <br />
+        2. 只抽［一個獎項］，且最好是［中籤　與　沒中籤］ 8       <br />
+    </h2>
 
+    <p><h3>那麼，請告訴我這次要抽幾個～： </h3>
+        <input id="number_of_lucky" type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="要被抽出的人數" /></p>
+
+    <div class="col mh-100 float-left" id="main">
+        <div id="fileinput"></div>
+        <input type="file" name="upload" id="upload">
+    </div>
+</div>
+
+<py-script>
+    from js import document
+    from io import BytesIO
+    import random
+    import csv
+    import os
+    import pandas as pd
+
+    from pyscript import when
+
+    @when('change', '#upload')
+    async def processFile(*args):
+        csv_file = document.getElementById('upload').files.item(0)
+
+        draw_headcount = int(document.getElementById('number_of_lucky').value)
+
+        array_buf = await csv_file.arrayBuffer() # Get arrayBuffer from file
+        file_bytes = array_buf.to_bytes() # convert to raw bytes array 
+        csv_file = BytesIO(file_bytes) # Wrap in Python BytesIO file-like object
+
+        # Read the CSV file into a Pandas DataFrame
+        df = pd.read_csv(csv_file)
+
+        # Convert each row to a list and store them in an array
+        rows_array = df.values.tolist()
+
+      
+        # Now, 'rows_array' contains each row of the CSV file as a list
+        print(rows_array)
+
+        data = [row[0] for row in rows_array]
+        lucky = []
         
-          
-                <div id="fileinput"></div>
-                <div id="upload"></div>
-                <div id="table"></div>
-                <div id="download"></div>
+        data_set = list(set(data))
+    
+        while(True):
+            lucky_one = random.sample(data_set,1)
+            if len(lucky) >= draw_headcount:
+                break
             
-        
-    <py-script>
-import asyncio
-import panel as pn
-import pandas as pd
-from panel.io.pyodide import show
-from io import StringIO
-
-fileInput = pn.widgets.FileInput(accept='.csv')
-uploadButton = pn.widgets.Button(name='Upload', button_type = 'primary')
-
-df = pd.DataFrame()
+            if lucky_one not in lucky:
+                lucky.append(lucky_one)
+                print("這個幸運兒是：",lucky_one)
+    
+    
+        with open('output.csv', 'w', newline='') as file:
+            writer = csv.writer(file, quoting=csv.QUOTE_ALL,delimiter=';')
+            writer.writerows(lucky)
+        print("HAPPPYY")
+      #  return (output.csv)
 
 
-
-table = pn.widgets.Tabulator(pagination='remote', page_size=10)
-
-
-
-def process_file(event):
-    if fileInput.value is not None:
-        table.value = pd.read_csv(io.BytesIO(fileInput.value))
-        document.getElementById('table').style.display = 'block'
-        
-
-
-
-uploadButton.on_click(process_file)
-
-def get_csv():
-    return io.BytesIO(table.value.to_csv().encode())
-
-file_download_csv = pn.widgets.FileDownload(filename="data.csv", callback=get_csv, button_type="primary")
-
-
-await show(fileInput, 'fileinput')
-await show(uploadButton, 'upload')
-await show(table, 'table')
-await show(file_download_csv, 'download')
-
-    </py-script>
-
-<py-repl id="my-repl" auto-generate="true"> </py-repl>
-
+</py-script>
 
 </body>
-
 </html>
