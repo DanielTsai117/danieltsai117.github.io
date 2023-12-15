@@ -13,7 +13,12 @@
       packages = ["pandas"]
     </py-config>
 <div class="row overflow-hidden" id="content">
-    <h1 class="text-center"> 我是一個~~抽籤計算機! 1 </h1><br />
+    <h1 class="text-center"> 我是一個~~抽籤計算機!  </h1><br />
+    <h2> 行前說明： <br />
+        本程式最佳的使用場景，是在  <br />
+        1. 要抽籤的名單中，具有［如果一人有多票，都只有一票的權利］的狀況  <br />
+        2. 只抽［一個獎項］，且最好是［中籤　與　沒中籤］ 7       <br />
+    </h2>
     <div class="col mh-100 float-left" id="main">
         <div id="fileinput"></div>
         <input type="file" name="upload" id="upload">
@@ -34,7 +39,7 @@
     async def processFile(*args):
         csv_file = document.getElementById('upload').files.item(0)
 
-        draw_headcount = 5
+        draw_headcount = int(input("那麼，請告訴我這次要抽幾個～："))
 
         array_buf = await csv_file.arrayBuffer() # Get arrayBuffer from file
         file_bytes = array_buf.to_bytes() # convert to raw bytes array 
