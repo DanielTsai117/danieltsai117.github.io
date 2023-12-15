@@ -31,14 +31,14 @@
 <py-script>
     from js import document,alert
 
-def farh(cel):
-    return (float(cel) *(9/5)) + 32
+#def farh(cel):
+#    return (float(cel) *(9/5)) + 32
         
     
 def convert(*ags, **kws):
     
-    celsius = document.getElementById('celsius').value;
-    result= farh(celsius)
+    number_of_lucky = document.getElementById('number_of_lucky').value;
+    result= number_of_lucky*20
     pyscript.write("Fahrenheit",result)    
 </py-script>    
 
@@ -61,7 +61,7 @@ def convert(*ags, **kws):
       <br />        
         <p><h3>那麼，請告訴我這次要抽幾個～：
         </h3>
-        <input id="celsius" type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="要被抽出的人數" /></p>
+        <input id="number_of_lucky" type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="要被抽出的人數" /></p>
         <center>
             <button id="convert" type="submit"  class="btn btn-info" pys-onClick="convert">抽吧！</button>
 
