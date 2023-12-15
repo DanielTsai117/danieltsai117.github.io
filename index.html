@@ -45,7 +45,6 @@ import os
 from io import BytesIO
     
 async def convert(*ags, **kws):
-    print("這個幸運兒是：")
     number_of_lucky = document.getElementById('number_of_lucky').value;
     #result= int(number_of_lucky)*20
     #pyscript.write("Fahrenheit",result)
@@ -57,7 +56,7 @@ async def convert(*ags, **kws):
     csv_file = BytesIO(file_bytes) # Wrap in Python BytesIO file-like object
 
     rows = csv.reader(csv_file)
-
+    print(rows)
 
     data = [row[0] for row in rows]
     lucky = []
@@ -115,7 +114,7 @@ async def processFile(*args):
           <br />
           1. 要抽籤的名單中，具有［如果一人有多票，都只有一票的權利］的狀況
           <br />
-          2. 只抽［一個獎項］，且最好是［中籤　與　沒中籤］ 7
+          2. 只抽［一個獎項］，且最好是［中籤　與　沒中籤］ 9
           <br />
         </h2>
       <br />        
