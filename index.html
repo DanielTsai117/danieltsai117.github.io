@@ -38,8 +38,47 @@
 def convert(*ags, **kws):
     
     number_of_lucky = document.getElementById('number_of_lucky').value;
-    result= int(number_of_lucky)*20
-    pyscript.write("Fahrenheit",result)
+    #result= int(number_of_lucky)*20
+    #pyscript.write("Fahrenheit",result)
+
+    csv_file = document.getElementById('upload').files.item(0)
+
+    array_buf = await csv_file.arrayBuffer() # Get arrayBuffer from file
+    file_bytes = array_buf.to_bytes() # convert to raw bytes array 
+    csv_file = BytesIO(file_bytes) # Wrap in Python BytesIO file-like object
+
+    rows = csv.reader(csv_file)
+
+
+    data = [row[0] for row in rows]
+    lucky = []
+    
+    data_set = list(set(data))
+
+    while(True):
+        lucky_one = random.sample(data_set,1)
+        if len(lucky) >= draw_headcount:
+            break
+        
+        if lucky_one not in lucky:
+            lucky.append(lucky_one)
+            print("這個幸運兒是：",lucky_one)
+
+
+
+
+
+
+
+    # Read the CSV file into a Pandas DataFrame
+    #df = pd.read_csv(csv_file)
+
+    # Convert each row to a list and store them in an array
+    #rows_array = df.values.tolist()
+
+    # Now, 'rows_array' contains each row of the CSV file as a list
+    #print(rows_array)    
+
     
 async def processFile(*args):
     csv_file = document.getElementById('upload').files.item(0)
