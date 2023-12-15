@@ -43,6 +43,7 @@ import random
 import csv
 import os
 from io import BytesIO
+import pandas as pd 
     
 async def convert(*ags, **kws):
     number_of_lucky = document.getElementById('number_of_lucky').value;
@@ -55,10 +56,14 @@ async def convert(*ags, **kws):
     file_bytes = array_buf.to_bytes() # convert to raw bytes array 
     csv_file = BytesIO(file_bytes) # Wrap in Python BytesIO file-like object
 
-    rows = csv.reader(csv_file)
-    print(rows)
+    #rows = csv.reader(csv_file)
+    #print(rows)
 
-    data = [row[0] for row in rows]
+    df = pd.read_csv(csv_file)
+    rows_array = df.values.tolist()
+    print(rows_array)
+
+    data = [row[0] for row in rows_array]
     lucky = []
     
     data_set = list(set(data))
@@ -114,7 +119,7 @@ async def processFile(*args):
           <br />
           1. 要抽籤的名單中，具有［如果一人有多票，都只有一票的權利］的狀況
           <br />
-          2. 只抽［一個獎項］，且最好是［中籤　與　沒中籤］ 9
+          2. 只抽［一個獎項］，且最好是［中籤　與　沒中籤］ 1
           <br />
         </h2>
       <br />        
