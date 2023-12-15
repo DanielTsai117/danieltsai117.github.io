@@ -43,9 +43,9 @@ def convert(*ags, **kws):
 
     csv_file = document.getElementById('upload').files.item(0)
 
-    array_buf = await csv_file.arrayBuffer() # Get arrayBuffer from file
-    file_bytes = array_buf.to_bytes() # convert to raw bytes array 
-    csv_file = BytesIO(file_bytes) # Wrap in Python BytesIO file-like object
+  #  array_buf = await csv_file.arrayBuffer() # Get arrayBuffer from file
+  #  file_bytes = array_buf.to_bytes() # convert to raw bytes array 
+  #  csv_file = BytesIO(file_bytes) # Wrap in Python BytesIO file-like object
 
     rows = csv.reader(csv_file)
 
