@@ -29,13 +29,80 @@
     packages = ["pandas"]
   </py-config>
 <!-- write your Python code in py-script tag -->
-
+<py-script>
+  from js import document,alert
+  import random
+  import csv
+  import os
+  from io import BytesIO
+  import pandas as pd 
+      
+  async def convert(*ags, **kws):
+      number_of_lucky = document.getElementById('number_of_lucky').value;
+      #result= int(number_of_lucky)*20
+      #pyscript.write("Fahrenheit",result)
+  
+      csv_file = document.getElementById('upload').files.item(0)
+  
+      array_buf = await csv_file.arrayBuffer() # Get arrayBuffer from file
+      file_bytes = array_buf.to_bytes() # convert to raw bytes array 
+      csv_file = BytesIO(file_bytes) # Wrap in Python BytesIO file-like object
+  
+      #rows = csv.reader(csv_file)
+      #print(rows)
+  
+      df = pd.read_csv(csv_file)
+      rows_array = df.values.tolist()
+      print(rows_array)
+  
+      data = [row[0] for row in rows_array]
+      lucky = []
+      
+      data_set = list(set(data))
+  
+      while(True):
+          lucky_one = random.sample(data_set,1)
+          if len(lucky) >= draw_headcount:
+              break
+          
+          if lucky_one not in lucky:
+              lucky.append(lucky_one)
+              print("這個幸運兒是：",lucky_one)
+  
+  
+      with open('output.csv', 'w', newline='') as file:
+          writer = csv.writer(file, quoting=csv.QUOTE_ALL,delimiter=';')
+          writer.writerows(lucky)
+      print("HAPPPYY")
+      return (output.csv)
+  
+  
+  
+  
+      
+  async def processFile(*args):
+      csv_file = document.getElementById('upload').files.item(0)
+  
+      array_buf = await csv_file.arrayBuffer() # Get arrayBuffer from file
+      file_bytes = array_buf.to_bytes() # convert to raw bytes array 
+      csv_file = BytesIO(file_bytes) # Wrap in Python BytesIO file-like object
+  
+      # Read the CSV file into a Pandas DataFrame
+      df = pd.read_csv(csv_file)
+  
+      # Convert each row to a list and store them in an array
+      rows_array = df.values.tolist()
+  
+      # Now, 'rows_array' contains each row of the CSV file as a list
+      print(rows_array)    
+  
+  </py-script>    
 <div class="container">    
     <h1 class="text-center"> 我是一個~~抽籤計算機!  </h1><br />
     <h2> 行前說明： <br />
     本程式最佳的使用場景，是在  <br />
     1. 要抽籤的名單中，具有［如果一人有多票，都只有一票的權利］的狀況  <br />
-    2. 只抽［一個獎項］，且最好是［中籤　與　沒中籤］ 5       <br />
+    2. 只抽［一個獎項］，且最好是［中籤　與　沒中籤］ 6       <br />
     </h2>
     <br />        
     <p><h3>那麼，請告訴我這次要抽幾個～： </h3>
@@ -67,73 +134,6 @@
 
 
 
-    <py-script>
-      from js import document,alert
-      import random
-      import csv
-      import os
-      from io import BytesIO
-      import pandas as pd 
-          
-      async def convert(*ags, **kws):
-          number_of_lucky = document.getElementById('number_of_lucky').value;
-          #result= int(number_of_lucky)*20
-          #pyscript.write("Fahrenheit",result)
-      
-          csv_file = document.getElementById('upload').files.item(0)
-      
-          array_buf = await csv_file.arrayBuffer() # Get arrayBuffer from file
-          file_bytes = array_buf.to_bytes() # convert to raw bytes array 
-          csv_file = BytesIO(file_bytes) # Wrap in Python BytesIO file-like object
-      
-          #rows = csv.reader(csv_file)
-          #print(rows)
-      
-          df = pd.read_csv(csv_file)
-          rows_array = df.values.tolist()
-          print(rows_array)
-      
-          data = [row[0] for row in rows_array]
-          lucky = []
-          
-          data_set = list(set(data))
-      
-          while(True):
-              lucky_one = random.sample(data_set,1)
-              if len(lucky) >= draw_headcount:
-                  break
-              
-              if lucky_one not in lucky:
-                  lucky.append(lucky_one)
-                  print("這個幸運兒是：",lucky_one)
-      
-      
-          with open('output.csv', 'w', newline='') as file:
-              writer = csv.writer(file, quoting=csv.QUOTE_ALL,delimiter=';')
-              writer.writerows(lucky)
-          print("HAPPPYY")
-          return (output.csv)
-      
-      
-      
-      
-          
-      async def processFile(*args):
-          csv_file = document.getElementById('upload').files.item(0)
-      
-          array_buf = await csv_file.arrayBuffer() # Get arrayBuffer from file
-          file_bytes = array_buf.to_bytes() # convert to raw bytes array 
-          csv_file = BytesIO(file_bytes) # Wrap in Python BytesIO file-like object
-      
-          # Read the CSV file into a Pandas DataFrame
-          df = pd.read_csv(csv_file)
-      
-          # Convert each row to a list and store them in an array
-          rows_array = df.values.tolist()
-      
-          # Now, 'rows_array' contains each row of the CSV file as a list
-          print(rows_array)    
-      
-      </py-script>    
+
     </body>
     </html>    
