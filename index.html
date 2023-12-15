@@ -65,19 +65,14 @@ def convert(*ags, **kws):
             print("這個幸運兒是：",lucky_one)
 
 
+    with open('output.csv', 'w', newline='') as file:
+        writer = csv.writer(file, quoting=csv.QUOTE_ALL,delimiter=';')
+        writer.writerows(lucky)
+
+    return (output.csv)
 
 
 
-
-
-    # Read the CSV file into a Pandas DataFrame
-    #df = pd.read_csv(csv_file)
-
-    # Convert each row to a list and store them in an array
-    #rows_array = df.values.tolist()
-
-    # Now, 'rows_array' contains each row of the CSV file as a list
-    #print(rows_array)    
 
     
 async def processFile(*args):
