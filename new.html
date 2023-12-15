@@ -13,7 +13,7 @@
       packages = ["pandas"]
     </py-config>
 <div class="row overflow-hidden" id="content">
-    <h1 class="text-center"> 我是一個~~抽籤計算機! 5 </h1><br />
+    <h1 class="text-center"> 我是一個~~抽籤計算機! 7 </h1><br />
     <div class="col mh-100 float-left" id="main">
         <div id="fileinput"></div>
         <input type="file" name="upload" id="upload">
@@ -23,6 +23,9 @@
 <py-script>
     from js import document
     from io import BytesIO
+    import random
+    import csv
+    import os
     import pandas as pd
 
     from pyscript import when
