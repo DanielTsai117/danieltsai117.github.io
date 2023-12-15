@@ -39,7 +39,24 @@ def convert(*ags, **kws):
     
     number_of_lucky = document.getElementById('number_of_lucky').value;
     result= int(number_of_lucky)*20
-    pyscript.write("Fahrenheit",result)    
+    pyscript.write("Fahrenheit",result)
+    
+async def processFile(*args):
+    csv_file = document.getElementById('upload').files.item(0)
+
+    array_buf = await csv_file.arrayBuffer() # Get arrayBuffer from file
+    file_bytes = array_buf.to_bytes() # convert to raw bytes array 
+    csv_file = BytesIO(file_bytes) # Wrap in Python BytesIO file-like object
+
+    # Read the CSV file into a Pandas DataFrame
+    df = pd.read_csv(csv_file)
+
+    # Convert each row to a list and store them in an array
+    rows_array = df.values.tolist()
+
+    # Now, 'rows_array' contains each row of the CSV file as a list
+    print(rows_array)    
+
 </py-script>    
 
     <div class="container">
@@ -62,6 +79,17 @@ def convert(*ags, **kws):
         <p><h3>那麼，請告訴我這次要抽幾個～：
         </h3>
         <input id="number_of_lucky" type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="要被抽出的人數" /></p>
+        
+        <p><h3>還有你要抽籤的csv：
+        </h3>
+        <div class="row overflow-hidden" id="content">
+          <div class="col mh-100 float-left" id="main">
+              <div id="fileinput"></div>
+              <input type="file" name="upload" id="upload">
+          </div>
+      </div>
+        
+
         <center>
             <button id="convert" type="submit"  class="btn btn-info" pys-onClick="convert">抽吧！</button>
 
