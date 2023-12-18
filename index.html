@@ -91,11 +91,14 @@
 
 
 
-  #  def download(*ags, **kws):
+  def download(*ags, **kws):
     
-  #    download = document.getElementById('download').value;
-  #    result= processFile(output.csv)
-  #    pyscript.write("FILE YOU NEED",result)   
+      download = document.getElementById('download').value
+      csv_file = document.getElementById('upload').files.item(0)
+      draw_headcount = int(document.getElementById('number_of_lucky').value)
+
+      result= processFile(output.csv)
+      pyscript.write("FILE YOU NEED",result)   
 
 </py-script>
 
