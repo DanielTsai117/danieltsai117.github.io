@@ -35,6 +35,8 @@
 
 </div>
 
+
+
 <py-script>
   from js import document
   from io import BytesIO
@@ -84,7 +86,7 @@
           writer = csv.writer(file, quoting=csv.QUOTE_ALL,delimiter=';')
           writer.writerows(lucky)
       print("HAPPPYY")
-      return (output.csv)
+      return (file)
 
 
 
