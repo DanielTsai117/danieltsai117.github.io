@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>抽籤系統</title>
+  <title>抽籤計算機</title>
 </head>
 <body>
-  <h1>抽籤系統</h1>
+  <h1>抽籤程式 -- Type 2</h1>
 
   <label for="fileInput">上傳抽籤名單 (CSV格式):</label>
   <input type="file" id="fileInput" accept=".csv">
@@ -24,6 +24,7 @@
   <script>
     let participants = [];
     let winners = [];
+    let probabilities = {};
 
     function readCSV(file) {
       const reader = new FileReader();
@@ -33,6 +34,11 @@
         const lines = csv.split('\n');
 
         participants = lines.map(line => line.trim());
+
+        // Initialize probabilities for each participant
+        participants.forEach(participant => {
+          probabilities[participant] = 1 / participants.length;
+        });
       };
 
       reader.readAsText(file);
@@ -48,11 +54,34 @@
 
       winners = [];
       for (let i = 0; i < numWinners; i++) {
-        const index = Math.floor(Math.random() * participants.length);
-        winners.push(participants.splice(index, 1)[0]);
+        const selectedParticipant = drawParticipant();
+        winners.push(selectedParticipant);
+
+        // Update probabilities
+        const remainingParticipants = participants.filter(participant => participant !== selectedParticipant);
+        remainingParticipants.forEach(participant => {
+          probabilities[participant] += probabilities[selectedParticipant] / remainingParticipants.length;
+        });
+
+        delete probabilities[selectedParticipant];
       }
 
       displayWinners();
+    }
+
+    function drawParticipant() {
+      const rand = Math.random();
+      let cumulativeProbability = 0;
+
+      for (const participant in probabilities) {
+        cumulativeProbability += probabilities[participant];
+        if (rand <= cumulativeProbability) {
+          return participant;
+        }
+      }
+
+      // Should not reach here, but in case of rounding errors
+      return participants[participants.length - 1];
     }
 
     function displayWinners() {
