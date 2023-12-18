@@ -24,55 +24,56 @@
   <button id="downloadButton" style="display:none;" onclick="downloadWinnersCSV()">下載中籤名單</button>
 
   <script>
-    let participants = [];
-
+    let participants = new Set();
+  
     function drawWinners() {
       const fileInput = document.getElementById('fileInput');
       const numWinnersInput = document.getElementById('numWinners');
       const winnersList = document.getElementById('winnersList');
       const downloadButton = document.getElementById('downloadButton');
-
+  
       const numWinners = parseInt(numWinnersInput.value);
       
       if (isNaN(numWinners) || numWinners <= 0) {
         alert('請輸入有效的抽籤人數。');
         return;
       }
-
+  
       const file = fileInput.files[0];
-
+  
       if (!file) {
         alert('請上傳抽籤名單檔案。');
         return;
       }
-
+  
       const reader = new FileReader();
-
+  
       reader.onload = function (e) {
         const content = e.target.result;
-        participants = content.split('\n').map(line => line.trim());
-
-        if (participants.length < numWinners) {
+        participants = new Set(content.split('\n').map(line => line.trim()));
+  
+        if (participants.size < numWinners) {
           alert('抽籤人數大於參加人數。');
           return;
         }
-
+  
         const selectedWinners = [];
         while (selectedWinners.length < numWinners) {
-          const randomIndex = Math.floor(Math.random() * participants.length);
-          const winner = participants.splice(randomIndex, 1)[0];
+          const randomIndex = Math.floor(Math.random() * participants.size);
+          const winner = [...participants][randomIndex];
+          participants.delete(winner);
           selectedWinners.push(winner);
         }
-
+  
         winnersList.innerHTML = '<h2>中籤名單:</h2><ul>' + selectedWinners.map(winner => `<li>${winner}</li>`).join('') + '</ul>';
         downloadButton.style.display = 'block';
       };
-
+  
       reader.readAsText(file);
     }
-
+  
     function downloadWinnersCSV() {
-      const csvContent = 'data:text/csv;charset=utf-8,' + participants.join('\n');
+      const csvContent = 'data:text/csv;charset=utf-8,' + [...participants].join('\n');
       const encodedUri = encodeURI(csvContent);
       const link = document.createElement('a');
       link.setAttribute('href', encodedUri);
