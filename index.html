@@ -26,17 +26,7 @@
         <div id="fileinput"></div>
         <input type="file" name="upload" id="upload">
     </div>
-
-
-    <center>
-      <button id="download" type="submit"  class="btn btn-info" pys-onClick="download">downloadDDD</button>
-
-    </center>
-
 </div>
-
-
-
 <py-script>
   from js import document
   from io import BytesIO
@@ -85,7 +75,7 @@
       with open('output.csv', 'w', newline='') as file:
           writer = csv.writer(file, quoting=csv.QUOTE_ALL,delimiter=';')
           writer.writerows(lucky)
-          pyscript.write("FILE YOU NEED",file)   
+       #   pyscript.write("FILE YOU NEED",file)   
           return (file)
       print("HAPPPYY")
       
