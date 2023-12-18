@@ -36,55 +36,55 @@
 </div>
 
 <py-script>
-    from js import document
-  #  from io import BytesIO
-    import random
-    import csv
-    import os
-    import pandas as pd
+  from js import document
+  from io import BytesIO
+  import random
+  import csv
+  import os
+  import pandas as pd
 
-    from pyscript import when
+  from pyscript import when
 
-    @when('change', '#upload')
-    async def processFile(*args):
-        csv_file = document.getElementById('upload').files.item(0)
+  @when('change', '#upload')
+  async def processFile(*args):
+      csv_file = document.getElementById('upload').files.item(0)
 
-        draw_headcount = int(document.getElementById('number_of_lucky').value)
+      draw_headcount = int(document.getElementById('number_of_lucky').value)
 
-        array_buf = await csv_file.arrayBuffer() # Get arrayBuffer from file
-        file_bytes = array_buf.to_bytes() # convert to raw bytes array 
-        csv_file = BytesIO(file_bytes) # Wrap in Python BytesIO file-like object
+      array_buf = await csv_file.arrayBuffer() # Get arrayBuffer from file
+      file_bytes = array_buf.to_bytes() # convert to raw bytes array 
+      csv_file = BytesIO(file_bytes) # Wrap in Python BytesIO file-like object
 
         # Read the CSV file into a Pandas DataFrame
-        df = pd.read_csv(csv_file)
+      df = pd.read_csv(csv_file)
 
         # Convert each row to a list and store them in an array
-        rows_array = df.values.tolist()
+      rows_array = df.values.tolist()
 
       
         # Now, 'rows_array' contains each row of the CSV file as a list
-        print(rows_array)
+      print(rows_array)
 
-        data = [row[0] for row in rows_array]
-        lucky = []
+      data = [row[0] for row in rows_array]
+      lucky = []
         
-        data_set = list(set(data))
+      data_set = list(set(data))
     
-        while(True):
-            lucky_one = random.sample(data_set,1)
-            if len(lucky) >= draw_headcount:
-                break
+      while(True):
+          lucky_one = random.sample(data_set,1)
+          if len(lucky) >= draw_headcount:
+              break
             
-            if lucky_one not in lucky:
-                lucky.append(lucky_one)
-                print("這個幸運兒是：",lucky_one)
+          if lucky_one not in lucky:
+              lucky.append(lucky_one)
+              print("這個幸運兒是：",lucky_one)
     
     
-        with open('output.csv', 'w', newline='') as file:
-            writer = csv.writer(file, quoting=csv.QUOTE_ALL,delimiter=';')
-            writer.writerows(lucky)
-        print("HAPPPYY")
-        return (output.csv)
+      with open('output.csv', 'w', newline='') as file:
+          writer = csv.writer(file, quoting=csv.QUOTE_ALL,delimiter=';')
+          writer.writerows(lucky)
+      print("HAPPPYY")
+      return (output.csv)
 
 
 
