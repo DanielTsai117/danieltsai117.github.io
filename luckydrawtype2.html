@@ -3,29 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lucky Draw</title>
+  <title>抽籤計算機</title>
 </head>
 <body>
-  <h1>Lucky Draw</h1>
-  
-  <label for="fileInput">Upload CSV File:</label>
+  <h1>抽籤程式 -- Type 2</h1>
+  <h2> 本程式最佳的使用場景，是在  <br />
+    1. 要抽籤的名單中，具有［一人有多票］的狀況(也就是一個人存在多票，是合法增加中籤率)  <br />
+    2. 只抽［一個獎項］，且最好是［中籤　與　沒中籤］       <br />
+</h2>
+  <label for="fileInput">上傳抽籤名單 (CSV 檔案):</label>
   <input type="file" id="fileInput" accept=".csv">
   
   <br>
   
-  <label for="numWinners">Number of Winners:</label>
+  <label for="numWinners">請輸入中籤人數:</label>
   <input type="number" id="numWinners" min="1" value="1">
   
   <br><br>
   
-  <button onclick="drawWinners()">Draw Winners</button>
+  <button onclick="drawWinners()">抽籤</button>
   
-  <h2>Winners:</h2>
+  <h2>中籤名單:</h2>
   <ul id="winnersList"></ul>
   
   <br>
   
-  <button onclick="downloadWinnersCSV()">Download Winners CSV</button>
+  <button onclick="downloadWinnersCSV()">下載中籤名單</button>
 
   <script>
     let winners = [];
