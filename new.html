@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>抽籤系統</title>
+    <title>抽籤程式</title>
 </head>
 <body>
-    <h1>抽籤系統</h1>
+    <h1>抽籤程式</h1>
     <h2> 本程式最佳的使用場景，是在  <br />
         1. 要抽籤的名單中，具有［如果一人有多票，都只有一票的權利］的狀況  <br />
         2. 只抽［一個獎項］，且最好是［中籤　與　沒中籤］ 1      <br />
     </h2>
-    <label for="uploadFile">上傳抽籤名單（CSV格式）：</label>
-    <input type="file" id="uploadFile" accept=".csv">
+    <label for="fileInput">上傳抽籤名單 (CSV 檔案):</label>
+    <input type="file" id="fileInput" accept=".csv">
     <br>
-    <label for="numWinners">抽籤人數：</label>
-    <input type="number" id="numWinners" min="1">
+    <label for="numWinners">請輸入中籤人數:</label>
+    <input type="number" id="numWinners" min="1" value="1">
     <br>
     <button onclick="drawWinners()">抽籤</button>
     <br>
-    <h2>中籤名單：</h2>
+    <h2>中籤名單:</h2>
     <ul id="winnersList"></ul>
     <br>
     <button onclick="downloadWinners()">下載中籤名單</button>
@@ -34,56 +34,49 @@
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function (e) {
-                    const csv = e.target.result;
-                    participants = parseCSV(csv);
+                    const content = e.target.result;
+                    participants = parseCSV(content);
                 };
                 reader.readAsText(file);
             }
         }
 
         function parseCSV(csv) {
-            const lines = csv.split('\n');
-            const participants = [];
-
-            for (let i = 1; i < lines.length; i++) {
-                const line = lines[i].trim();
-                if (line) {
-                    participants.push(line);
-                }
-            }
-
-            return participants;
+            // 假設 CSV 格式是每行一個名字
+            return csv.split('\n').map(line => line.trim()).filter(Boolean);
         }
 
         function drawWinners() {
-            const numWinnersInput = document.getElementById('numWinners');
-            const numWinners = parseInt(numWinnersInput.value);
+            const numWinners = parseInt(document.getElementById('numWinners').value, 10);
+            const uniqueParticipants = [...new Set(participants)];
 
-            if (isNaN(numWinners) || numWinners <= 0 || numWinners > participants.length) {
-                alert('請輸入有效的抽籤人數！');
-                return;
-            }
+            if (numWinners <= uniqueParticipants.length) {
+                const winners = [];
+                while (winners.length < numWinners) {
+                    const randomIndex = Math.floor(Math.random() * uniqueParticipants.length);
+                    winners.push(uniqueParticipants.splice(randomIndex, 1)[0]);
+                }
 
-            const shuffledParticipants = [...participants];
-            for (let i = shuffledParticipants.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [shuffledParticipants[i], shuffledParticipants[j]] = [shuffledParticipants[j], shuffledParticipants[i]];
-            }
-
-            const winnersList = document.getElementById('winnersList');
-            winnersList.innerHTML = '';
-
-            for (let i = 0; i < numWinners; i++) {
-                const winner = shuffledParticipants[i];
-                const listItem = document.createElement('li');
-                listItem.textContent = winner;
-                winnersList.appendChild(listItem);
+                displayWinners(winners);
+            } else {
+                alert('中籤人數不得超過參與者人數！');
             }
         }
 
-        function downloadWinners() {
+        function displayWinners(winners) {
             const winnersList = document.getElementById('winnersList');
-            const winners = Array.from(winnersList.getElementsByTagName('li')).map(li => li.textContent);
+            winnersList.innerHTML = '';
+
+            winners.forEach(winner => {
+                const listItem = document.createElement('li');
+                listItem.textContent = winner;
+                winnersList.appendChild(listItem);
+            });
+        }
+
+        function downloadWinners() {
+            const winners = Array.from(document.getElementById('winnersList').children)
+                .map(item => item.textContent);
 
             const csvContent = 'data:text/csv;charset=utf-8,' + winners.join('\n');
             const encodedUri = encodeURI(csvContent);
@@ -95,7 +88,7 @@
             document.body.removeChild(link);
         }
 
-        document.getElementById('uploadFile').addEventListener('change', handleFileUpload);
+        document.getElementById('fileInput').addEventListener('change', handleFileUpload);
     </script>
 </body>
 </html>
