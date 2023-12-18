@@ -1,122 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>抽籤計算機</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>抽籤程式</title>
 </head>
 <body>
-  <h1>抽籤程式 -- Type 2</h1>
+    <h1>抽籤程式</h1>
 
-  <label for="fileInput">上傳抽籤名單 (CSV格式):</label>
-  <input type="file" id="fileInput" accept=".csv">
-  
-  <label for="numWinners">請輸入中籤人數:</label>
-  <input type="number" id="numWinners" min="1">
+    <input type="file" id="fileInput" accept=".csv">
+    <br>
+    <label for="numWinners">抽籤人數：</label>
+    <input type="number" id="numWinners" min="1" value="1">
+    <br>
+    <button onclick="drawWinners()">抽籤</button>
 
-  <button onclick="drawWinners()">進行抽籤</button>
+    <h2>中籤名單</h2>
+    <ul id="winnersList"></ul>
 
-  <h2>中籤名單:</h2>
-  <ul id="winnersList"></ul>
+    <a id="downloadLink" style="display:none">下載中籤名單</a>
 
-  <button onclick="downloadWinnersCSV()">下載中籤名單</button>
+    <script>
+        let participants = [];
 
-  <script>
-    let participants = [];
-    let winners = [];
-    let probabilities = {};
+        document.getElementById('fileInput').addEventListener('change', handleFileSelect);
 
-    function readCSV(file) {
-      const reader = new FileReader();
-
-      reader.onload = function(e) {
-        const csv = e.target.result;
-        const lines = csv.split('\n');
-
-        participants = lines.map(line => line.trim());
-
-        // Initialize probabilities for each participant
-        participants.forEach(participant => {
-          probabilities[participant] = 1 / participants.length;
-        });
-      };
-
-      reader.readAsText(file);
-    }
-
-    function drawWinners() {
-      const numWinners = document.getElementById('numWinners').value;
-
-      if (numWinners <= 0 || numWinners > participants.length) {
-        alert('請輸入正確的中籤人數');
-        return;
-      }
-
-      winners = [];
-      for (let i = 0; i < numWinners; i++) {
-        const selectedParticipant = drawParticipant();
-        winners.push(selectedParticipant);
-
-        // Update probabilities
-        const remainingParticipants = participants.filter(participant => participant !== selectedParticipant);
-        remainingParticipants.forEach(participant => {
-          probabilities[participant] += probabilities[selectedParticipant] / remainingParticipants.length;
-        });
-
-        delete probabilities[selectedParticipant];
-      }
-
-      displayWinners();
-    }
-
-    function drawParticipant() {
-      const rand = Math.random();
-      let cumulativeProbability = 0;
-
-      for (const participant in probabilities) {
-        cumulativeProbability += probabilities[participant];
-        if (rand <= cumulativeProbability) {
-          return participant;
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const csv = e.target.result;
+                    participants = parseCSV(csv);
+                };
+                reader.readAsText(file);
+            }
         }
-      }
 
-      // Should not reach here, but in case of rounding errors
-      return participants[participants.length - 1];
-    }
+        function parseCSV(csv) {
+            const lines = csv.split('\n');
+            const participants = [];
+            for (const line of lines) {
+                const [name] = line.split(',').map(value => value.trim());
+                if (name) {
+                    participants.push({ name, selected: false });
+                }
+            }
+            return participants;
+        }
 
-    function displayWinners() {
-      const winnersList = document.getElementById('winnersList');
-      winnersList.innerHTML = '';
+        function drawWinners() {
+            const numWinners = parseInt(document.getElementById('numWinners').value, 10);
+            const winnersList = document.getElementById('winnersList');
+            const downloadLink = document.getElementById('downloadLink');
+            
+            if (participants.length === 0 || isNaN(numWinners) || numWinners <= 0) {
+                alert('請確保已上傳名單並輸入正確的抽籤人數。');
+                return;
+            }
 
-      winners.forEach(winner => {
-        const listItem = document.createElement('li');
-        listItem.textContent = winner;
-        winnersList.appendChild(listItem);
-      });
-    }
+            // Reset selected status
+            participants.forEach(participant => participant.selected = false);
 
-    function downloadWinnersCSV() {
-      if (winners.length === 0) {
-        alert('請先進行抽籤');
-        return;
-      }
+            const winners = [];
+            for (let i = 0; i < numWinners; i++) {
+                let selectedParticipant;
+                do {
+                    selectedParticipant = getRandomParticipant();
+                } while (selectedParticipant.selected);
+                selectedParticipant.selected = true;
+                winners.push(selectedParticipant.name);
+            }
 
-      const csvContent = winners.join('\n');
-      const blob = new Blob([csvContent], { type: 'text/csv' });
-      const link = document.createElement('a');
+            // Display winners on the webpage
+            winnersList.innerHTML = '';
+            winners.forEach(winner => {
+                const listItem = document.createElement('li');
+                listItem.textContent = winner;
+                winnersList.appendChild(listItem);
+            });
 
-      link.href = window.URL.createObjectURL(blob);
-      link.download = 'winners.csv';
-      link.click();
-    }
+            // Create CSV content for download
+            const csvContent = winners.map(winner => `${winner}\n`).join('');
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
 
-    document.getElementById('fileInput').addEventListener('change', function(e) {
-      const file = e.target.files[0];
+            // Display download link
+            downloadLink.href = url;
+            downloadLink.download = 'winners.csv';
+            downloadLink.style.display = 'block';
+        }
 
-      if (file) {
-        readCSV(file);
-      }
-    });
-  </script>
+        function getRandomParticipant() {
+            const index = Math.floor(Math.random() * participants.length);
+            return participants[index];
+        }
+    </script>
 </body>
 </html>
