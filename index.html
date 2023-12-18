@@ -16,7 +16,7 @@
     <h1 class="text-center"> 我是一個~~抽籤計算機!  </h1><br />
     <h2> 本程式最佳的使用場景，是在  <br />
         1. 要抽籤的名單中，具有［如果一人有多票，都只有一票的權利］的狀況  <br />
-        2. 只抽［一個獎項］，且最好是［中籤　與　沒中籤］ 8       <br />
+        2. 只抽［一個獎項］，且最好是［中籤　與　沒中籤］ 9       <br />
     </h2>
 
     <p><h3>那麼，請告訴我這次要抽幾個～： </h3>
@@ -86,6 +86,8 @@
           writer = csv.writer(file, quoting=csv.QUOTE_ALL,delimiter=';')
           writer.writerows(lucky)
       print("HAPPPYY")
+      
+      pyscript.write("FILE YOU NEED",file)   
       return (file)
 
 
