@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>抽籤系統</title>
+</head>
+<body>
+  <h1>抽籤系統</h1>
+
+  <label for="fileInput">上傳抽籤名單 (CSV格式):</label>
+  <input type="file" id="fileInput" accept=".csv">
+  
+  <label for="numWinners">請輸入中籤人數:</label>
+  <input type="number" id="numWinners" min="1">
+
+  <button onclick="drawWinners()">進行抽籤</button>
+
+  <h2>中籤名單:</h2>
+  <ul id="winnersList"></ul>
+
+  <button onclick="downloadWinnersCSV()">下載中籤名單</button>
+
+  <script>
+    let participants = [];
+    let winners = [];
+
+    function readCSV(file) {
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        const csv = e.target.result;
+        const lines = csv.split('\n');
+
+        participants = lines.map(line => line.trim());
+      };
+
+      reader.readAsText(file);
+    }
+
+    function drawWinners() {
+      const numWinners = document.getElementById('numWinners').value;
+
+      if (numWinners <= 0 || numWinners > participants.length) {
+        alert('請輸入正確的中籤人數');
+        return;
+      }
+
+      winners = [];
+      for (let i = 0; i < numWinners; i++) {
+        const index = Math.floor(Math.random() * participants.length);
+        winners.push(participants.splice(index, 1)[0]);
+      }
+
+      displayWinners();
+    }
+
+    function displayWinners() {
+      const winnersList = document.getElementById('winnersList');
+      winnersList.innerHTML = '';
+
+      winners.forEach(winner => {
+        const listItem = document.createElement('li');
+        listItem.textContent = winner;
+        winnersList.appendChild(listItem);
+      });
+    }
+
+    function downloadWinnersCSV() {
+      if (winners.length === 0) {
+        alert('請先進行抽籤');
+        return;
+      }
+
+      const csvContent = winners.join('\n');
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+      const link = document.createElement('a');
+
+      link.href = window.URL.createObjectURL(blob);
+      link.download = 'winners.csv';
+      link.click();
+    }
+
+    document.getElementById('fileInput').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+
+      if (file) {
+        readCSV(file);
+      }
+    });
+  </script>
+</body>
+</html>
