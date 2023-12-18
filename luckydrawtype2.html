@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>抽籤程式2</title>
+    <title>抽籤程式</title>
 </head>
 <body>
     <h1>抽籤程式</h1>
@@ -59,9 +59,6 @@
                 return;
             }
 
-            // Reset selected status
-            participants.forEach(participant => participant.selected = false);
-
             if (numWinners > participants.length) {
                 alert('抽籤人數大於名單人數。');
                 return;
@@ -97,9 +94,8 @@
         }
 
         function getRandomParticipant() {
-            const availableParticipants = participants.filter(participant => !participant.selected);
-            const index = Math.floor(Math.random() * availableParticipants.length);
-            return availableParticipants[index];
+            const index = Math.floor(Math.random() * participants.length);
+            return participants[index];
         }
     </script>
 </body>
