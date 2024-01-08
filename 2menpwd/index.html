@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>密碼雙控輔助機</title>
+    <title>Base64 Encoder</title>
 </head>
 <body>
 
-    <h1>請兩個人來輸入密碼唷</h1>
+    <h1>Base64 Encoder</h1>
 
-    <label for="input1">1號控制員的密碼字串:</label>
+    <label for="input1">Person 1 String:</label>
     <input type="text" id="input1" placeholder="Enter string for person 1">
 
-    <label for="input2">2號控制員的密碼字串:</label>
+    <label for="input2">Person 2 String:</label>
     <input type="text" id="input2" placeholder="Enter string for person 2">
 
-    <button onclick="generateBase64()">產生編碼</button>
+    <button onclick="generateBase64()">Generate Base64</button>
 
     <h2>Result:</h2>
-    <p id="下面是你的結果，請記得複製走，本站台沒有進行任何保存"></p>
+    <p id="result"></p>
 
     <script>
         function generateBase64() {
@@ -33,7 +33,7 @@
             var base64Encoded = btoa(combinedString);
 
             // 顯示結果
-            document.getElementById("result").innerText = "產出的base64編碼是: " + base64Encoded;
+            document.getElementById("result").innerText = "Base64 Encoded Result: " + base64Encoded;
         }
     </script>
 
