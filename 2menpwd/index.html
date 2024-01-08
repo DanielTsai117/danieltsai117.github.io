@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base64 Encoder</title>
+</head>
+<body>
+
+    <h1>Base64 Encoder</h1>
+
+    <label for="input1">Person 1 String:</label>
+    <input type="text" id="input1" placeholder="Enter string for person 1">
+
+    <label for="input2">Person 2 String:</label>
+    <input type="text" id="input2" placeholder="Enter string for person 2">
+
+    <button onclick="generateBase64()">Generate Base64</button>
+
+    <h2>Result:</h2>
+    <p id="result"></p>
+
+    <script>
+        function generateBase64() {
+            // 取得使用者輸入的字串
+            var input1 = document.getElementById("input1").value;
+            var input2 = document.getElementById("input2").value;
+
+            // 將兩個字串相加
+            var combinedString = input1 + input2;
+
+            // 將相加後的字串進行 BASE64 編碼
+            var base64Encoded = btoa(combinedString);
+
+            // 顯示結果
+            document.getElementById("result").innerText = "Base64 Encoded Result: " + base64Encoded;
+        }
+    </script>
+
+</body>
+</html>
