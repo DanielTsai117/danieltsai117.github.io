@@ -192,12 +192,11 @@
       <div class="col-md-6">
         <div class="h-100 p-5 text-bg-dark rounded-3">
           <h2>PDF Editor</h2>
-          <form id="uploadForm">
-            <input type="file" accept=".pdf" id="pdfFile" />
-            <button type="button" onclick="loadAndEditPDF()">Load and Edit PDF</button>
-            <button type="button" onclick="downloadPDF()">Download PDF</button>
-          </form>
-          <canvas id="pdfCanvas" width="800" height="600"></canvas>
+          <form id="pdfForm">
+            <input type="file" id="pdfInput" accept=".pdf" />
+            <button type="button" onclick="handleUpload()">Upload PDF</button>
+        </form>
+        <button id="printButton" style="display:none;" onclick="handlePrint()">Print PDF</button>
 
 
       
@@ -211,54 +210,9 @@
   </div>
 </main>
 <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-  let pdfDoc = null;
-  let pdfCanvas = document.getElementById('pdfCanvas');
-  let ctx = pdfCanvas.getContext('2d');
-  let editedInfo = []; // 存放編輯資訊
 
-  function loadAndEditPDF() {
-    let fileInput = document.getElementById('pdfFile');
-    let file = fileInput.files[0];
-
-    if (file) {
-      let fileReader = new FileReader();
-      fileReader.onload = function(e) {
-        let typedarray = new Uint8Array(e.target.result);
-        loadPDF(typedarray);
-      };
-      fileReader.readAsArrayBuffer(file);
-    }
-  }
-
-  function loadPDF(pdfData) {
-    let pdfBlob = new Blob([pdfData], { type: 'application/pdf' });
-    let pdfURL = URL.createObjectURL(pdfBlob);
-
-    let embedElement = document.createElement('embed');
-    embedElement.setAttribute('src', pdfURL);
-    embedElement.setAttribute('type', 'application/pdf');
-    embedElement.style.width = '100%';
-    embedElement.style.height = '100%';
-
-    pdfCanvas.innerHTML = '';
-    pdfCanvas.appendChild(embedElement);
-
-    embedElement.addEventListener('load', function() {
-      // 在這裡實現繪製編輯資訊的邏輯，例如使用ctx繪製文字、形狀等
-      // 例如：ctx.fillText('編輯的文字', x, y);
-    });
-  }
-
-  function downloadPDF() {
-    let newPDF = new jsPDF();
-    newPDF.addImage(pdfCanvas.toDataURL(), 'PNG', 0, 0, newPDF.internal.pageSize.width, newPDF.internal.pageSize.height);
-    
-    // 在這裡將編輯的資訊添加到新的PDF中，例如：newPDF.text('編輯的文字', x, y);
-
-    newPDF.save('edited_pdf.pdf');
-  }
-</script>
+<script src="https://unpkg.com/pdf-lib"></script>
+<script src="script.js"></script>
 
 
 
