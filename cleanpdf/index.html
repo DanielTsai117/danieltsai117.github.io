@@ -13,7 +13,6 @@
     
     
     <script src="../assets/js/color-modes.js"></script>
-    <script src="https://unpkg.com/browse/pdfjs-dist@4.0.379/build/pdf.mjs"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
 
@@ -214,30 +213,9 @@
 <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 <script>
   let pdfDoc = null;
-  let pageNum = 1;
-  let pageRendering = false;
   let pdfCanvas = document.getElementById('pdfCanvas');
   let ctx = pdfCanvas.getContext('2d');
   let editedInfo = []; // 存放編輯資訊
-
-  function renderPage(num) {
-    pageRendering = true;
-    pdfDoc.getPage(num).then(function(page) {
-      let viewport = page.getViewport({ scale: 1.5 });
-      pdfCanvas.width = viewport.width;
-      pdfCanvas.height = viewport.height;
-
-      let renderContext = {
-        canvasContext: ctx,
-        viewport: viewport
-      };
-
-      page.render(renderContext).promise.then(function() {
-        pageRendering = false;
-        drawEditedInfo();
-      });
-    });
-  }
 
   function loadAndEditPDF() {
     let fileInput = document.getElementById('pdfFile');
@@ -247,18 +225,29 @@
       let fileReader = new FileReader();
       fileReader.onload = function(e) {
         let typedarray = new Uint8Array(e.target.result);
-        PDFJS.getDocument(typedarray).then(function(pdfDoc_) {
-          pdfDoc = pdfDoc_;
-          renderPage(pageNum);
-        });
+        loadPDF(typedarray);
       };
       fileReader.readAsArrayBuffer(file);
     }
   }
 
-  function drawEditedInfo() {
-    // 在這裡實現繪製編輯資訊的邏輯，例如使用ctx繪製文字、形狀等
-    // 例如：ctx.fillText('編輯的文字', x, y);
+  function loadPDF(pdfData) {
+    let pdfBlob = new Blob([pdfData], { type: 'application/pdf' });
+    let pdfURL = URL.createObjectURL(pdfBlob);
+
+    let embedElement = document.createElement('embed');
+    embedElement.setAttribute('src', pdfURL);
+    embedElement.setAttribute('type', 'application/pdf');
+    embedElement.style.width = '100%';
+    embedElement.style.height = '100%';
+
+    pdfCanvas.innerHTML = '';
+    pdfCanvas.appendChild(embedElement);
+
+    embedElement.addEventListener('load', function() {
+      // 在這裡實現繪製編輯資訊的邏輯，例如使用ctx繪製文字、形狀等
+      // 例如：ctx.fillText('編輯的文字', x, y);
+    });
   }
 
   function downloadPDF() {
