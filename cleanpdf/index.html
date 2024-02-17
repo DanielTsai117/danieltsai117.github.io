@@ -195,8 +195,8 @@
           <form id="pdfForm">
             <input type="file" id="pdfInput" accept=".pdf" />
             <button type="button" onclick="handleUpload()">Upload PDF</button>
-        </form>
-        <button id="printButton" style="display:none;" onclick="handlePrint()">Print PDF</button>
+          </form>
+        <button id="convertButton" style="display:none;" onclick="convertToImageAndBack()">Convert to Image and Back to PDF</button>
 
 
       
@@ -211,7 +211,9 @@
 </main>
 <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 
+
 <script src="https://unpkg.com/pdf-lib"></script>
+<script src="https://unpkg.com/pdfjs-dist"></script>    
 <script src="script.js"></script>
 
 
