@@ -1,0 +1,27 @@
+<body>
+    <div class="main-content">
+        <div class="main-visual">
+            <div class="title-1">奈奈子塔羅</div>
+            <div class="title-1">抽牌系統</div>
+            <div class="title-2">測試版</div>
+            <div class="title-2">（大牌）</div>
+        </div>
+        <div class="button-container">
+            <button id="single-button" class="draw-button" onclick="drawCards(1, 'single-button')">單張牌</button>
+            <button class="draw-button" id="time-flow-button" onclick="drawCards(3, 'time-flow-button')">時間之流</button>
+            <button class="draw-button" id="relationship-button" onclick="drawCards(4, 'relationship-button')">關係牌陣</button>
+            <button class="draw-button" id="universal-button" onclick="drawCards(4, 'universal-button')">萬用牌陣</button>
+            <button class="draw-button" id="no-spread-button" onclick="drawCards(5, 'no-spread-button')">無牌陣</button>
+        </div>
+        <div id="cards-container">
+            <div class="cards" id="cards">
+                <!-- 抽到的牌會顯示在這裡 -->
+            </div>
+            <div id="reset-container"></div>
+        </div>
+        <div class="copyright">
+            © 2024 <a href="https://www.instagram.com/lainineko/" target="_blank">奈奈子塔羅</a>. All rights reserved.
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
