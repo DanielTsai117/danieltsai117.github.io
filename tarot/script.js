@@ -26,7 +26,7 @@ const tarotDeck = [
             'https://i.imgur.com/trjFmGF.png',
             'https://i.imgur.com/TWyjkwO.png',
  
-    // 小牌
+		// 小牌
 ];
 
 // 存儲已抽取的卡牌索引和狀態
