@@ -124,6 +124,24 @@
         background-color: #f2f2f2;
         font-weight: bold;
       }
+
+      .filter-controls {
+        margin-bottom: 20px;
+        display: flex;
+        gap: 15px;
+        align-items: center;
+      }
+
+      .filter-controls label {
+        font-weight: bold;
+        margin-right: 5px;
+      }
+
+      .filter-controls select {
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
     </style>
 
     
@@ -201,6 +219,13 @@
       <div class="col-md-12">
         <div class="h-100 p-5 bg-body-tertiary border rounded-3">
           <h2>機油及齒輪油交換量</h2>
+          <div class="filter-controls">
+            <label for="brandFilter">廠牌：</label>
+            <select id="brandFilter" class="form-select"></select>
+
+            <label for="displacementFilter">排氣量(CC)：</label>
+            <select id="displacementFilter" class="form-select"></select>
+          </div>
           <div id="oilInfoTableContainer">
             <p>載入中...如果長時間未顯示，請確認網路連線或資料來源。</p>
           </div>
@@ -211,30 +236,89 @@
     <script>
       const csvUrl = "https://raw.githubusercontent.com/DanielTsai117/motor_oil/refs/heads/main/motor_oil_change.csv";
       const tableContainer = document.getElementById("oilInfoTableContainer");
+      const brandFilter = document.getElementById("brandFilter");
+      const displacementFilter = document.getElementById("displacementFilter");
 
-      async function fetchAndDisplayCSV() {
+      let allOilData = []; // Store the full dataset
+
+      async function fetchAndParseCSV() {
         try {
           const response = await fetch(csvUrl);
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
           const csvText = await response.text();
-          parseAndDisplayCSV(csvText);
+          
+          const lines = csvText.trim().split('\n');
+          if (lines.length === 0) {
+            tableContainer.innerHTML = "<p>無資料可顯示。</p>";
+            return;
+          }
+
+          const headers = lines[0].split(',').map(h => h.trim());
+          const dataRows = lines.slice(1).map(line => {
+            const cells = line.split(',').map(c => c.trim());
+            const row = {};
+            headers.forEach((header, index) => {
+              row[header] = cells[index];
+            });
+            return row;
+          });
+
+          allOilData = dataRows; // Store the parsed data
+          populateFilters(headers);
+          applyFilters(); // Display all data initially
         } catch (error) {
           console.error("Error fetching CSV:", error);
           tableContainer.innerHTML = `<p style="color: red;">載入資料失敗：${error.message}，請稍後再試。</p>`;
         }
       }
 
-      function parseAndDisplayCSV(csvText) {
-        const lines = csvText.trim().split('\n');
-        if (lines.length === 0) {
-          tableContainer.innerHTML = "<p>無資料可顯示。</p>";
+      function populateFilters(headers) {
+        const brandIndex = headers.indexOf('廠牌');
+        const displacementIndex = headers.indexOf('排氣量(CC)');
+
+        if (brandIndex !== -1) {
+          const brands = [...new Set(allOilData.map(row => row['廠牌']))].sort();
+          brandFilter.innerHTML = '<option value="all">所有廠牌</option>';
+          brands.forEach(brand => {
+            brandFilter.innerHTML += `<option value="${brand}">${brand}</option>`;
+          });
+        }
+
+        if (displacementIndex !== -1) {
+          const displacements = [...new Set(allOilData.map(row => row['排氣量(CC)']))].sort((a, b) => parseInt(a) - parseInt(b));
+          displacementFilter.innerHTML = '<option value="all">所有排氣量</option>';
+          displacements.forEach(disp => {
+            displacementFilter.innerHTML += `<option value="${disp}">${disp}</option>`;
+          });
+        }
+      }
+
+      function applyFilters() {
+        const selectedBrand = brandFilter.value;
+        const selectedDisplacement = displacementFilter.value;
+
+        let filteredData = allOilData;
+
+        if (selectedBrand !== "all") {
+          filteredData = filteredData.filter(row => row['廠牌'] === selectedBrand);
+        }
+
+        if (selectedDisplacement !== "all") {
+          filteredData = filteredData.filter(row => row['排氣量(CC)'] === selectedDisplacement);
+        }
+
+        renderTable(filteredData);
+      }
+
+      function renderTable(dataToDisplay) {
+        if (dataToDisplay.length === 0) {
+          tableContainer.innerHTML = "<p>無符合條件的資料。</p>";
           return;
         }
 
-        const headers = lines[0].split(',');
-        const dataRows = lines.slice(1);
+        const headers = Object.keys(dataToDisplay[0]); // Get headers from the first data row
 
         let tableHtml = '<table class="info-table table table-striped table-hover">';
         
@@ -247,15 +331,12 @@
 
         // Table Body
         tableHtml += '<tbody>';
-        dataRows.forEach(line => {
-          const cells = line.split(',');
-          if (cells.length === headers.length) { // Ensure consistent number of columns
-            tableHtml += '<tr>';
-            cells.forEach(cell => {
-              tableHtml += `<td>${cell.trim()}</td>`;
-            });
-            tableHtml += '</tr>';
-          }
+        dataToDisplay.forEach(row => {
+          tableHtml += '<tr>';
+          headers.forEach(header => {
+            tableHtml += `<td>${row[header] || ''}</td>`; // Display cell content, handle potential undefined
+          });
+          tableHtml += '</tr>';
         });
         tableHtml += '</tbody>';
         tableHtml += '</table>';
@@ -263,8 +344,12 @@
         tableContainer.innerHTML = tableHtml;
       }
 
+      // Event Listeners for filters
+      brandFilter.addEventListener('change', applyFilters);
+      displacementFilter.addEventListener('change', applyFilters);
+
       // Call the function to fetch and display CSV when the page loads
-      document.addEventListener('DOMContentLoaded', fetchAndDisplayCSV);
+      document.addEventListener('DOMContentLoaded', fetchAndParseCSV);
     </script>
 
     <footer class="pt-3 mt-4 text-body-secondary border-top">
