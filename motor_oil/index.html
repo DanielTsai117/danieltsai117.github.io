@@ -1,363 +1,403 @@
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
-  <head>
+
+<head>
+    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0VJNH4RQYL"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-      gtag('config', 'G-0VJNH4RQYL');
+        gtag('config', 'G-0VJNH4RQYL');
     </script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3691663148253836"
-      crossorigin="anonymous"></script>
-    
+
     <script src="../assets/js/color-modes.js"></script>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="機油交換量資訊">
+    
+    <!-- Description for Search Engines -->
+    <meta name="description" content="丹尼爾的小工具箱，提供各廠牌機車的機油及齒輪油交換量參考資訊，幫助您更輕鬆進行車輛保養。">
+    
+    <!-- Author of the Website -->
     <meta name="author" content="Daniel">
+
+    <!-- Meta Keywords for SEO -->
+    <meta name="keywords" content="機油交換量, 機車保養, 齒輪油, 車輛保養, 油量計算工具, 油品參考, 汽車維修, 油品選擇, 機車換油, 汽車換油">
+    
+    <!-- Open Graph (OG) Tags for better social media sharing -->
+    <meta property="og:title" content="丹尼爾的小工具箱 - 機油交換量資訊">
+    <meta property="og:description" content="查詢各廠牌機車的機油和齒輪油交換量參考資訊，提升您的車輛保養體驗。">
+    <meta property="og:image" content="https://your-website.com/path/to/image.jpg">
+    <meta property="og:url" content="https://your-website.com">
+    <meta property="og:type" content="website">
+
+    <!-- Robots meta tag to control search engine crawling -->
+    <meta name="robots" content="index, follow">
+    
     <meta name="generator" content="Hugo 0.118.2">
     <title>丹尼爾的小工具箱 - 機油交換量資訊</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/jumbotron/">
-
-    
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
-
-<link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
         }
-      }
 
-      .b-example-divider {
-        width: 100%;
-        height: 3rem;
-        background-color: rgba(0, 0, 0, .1);
-        border: solid rgba(0, 0, 0, .15);
-        border-width: 1px 0;
-        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-      }
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
 
-      .b-example-vr {
-        flex-shrink: 0;
-        width: 1.5rem;
-        height: 100vh;
-      }
+        .b-example-divider {
+            width: 100%;
+            height: 3rem;
+            background-color: rgba(0, 0, 0, .1);
+            border: solid rgba(0, 0, 0, .15);
+            border-width: 1px 0;
+            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
 
-      .bi {
-        vertical-align: -.125em;
-        fill: currentColor;
-      }
+        .b-example-vr {
+            flex-shrink: 0;
+            width: 1.5rem;
+            height: 100vh;
+        }
 
-      .nav-scroller {
-        position: relative;
-        z-index: 2;
-        height: 2.75rem;
-        overflow-y: hidden;
-      }
+        .bi {
+            vertical-align: -.125em;
+            fill: currentColor;
+        }
 
-      .nav-scroller .nav {
-        display: flex;
-        flex-wrap: nowrap;
-        padding-bottom: 1rem;
-        margin-top: -1px;
-        overflow-x: auto;
-        text-align: center;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
-      }
+        .nav-scroller {
+            position: relative;
+            z-index: 2;
+            height: 2.75rem;
+            overflow-y: hidden;
+        }
 
-      .btn-bd-primary {
-        --bd-violet-bg: #712cf9;
-        --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+        .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
 
-        --bs-btn-font-weight: 600;
-        --bs-btn-color: var(--bs-white);
-        --bs-btn-bg: var(--bd-violet-bg);
-        --bs-btn-border-color: var(--bd-violet-bg);
-        --bs-btn-hover-color: var(--bs-white);
-        --bs-btn-hover-bg: #6528e0;
-        --bs-btn-hover-border-color: #6528e0;
-        --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
-        --bs-btn-active-color: var(--bs-btn-hover-color);
-        --bs-btn-active-bg: #5a23c8;
-        --bs-btn-active-border-color: #5a23c8;
-      }
+        .btn-bd-primary {
+            --bd-violet-bg: #712cf9;
+            --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
 
-      .bd-mode-toggle {
-        z-index: 1500;
-      }
+            --bs-btn-font-weight: 600;
+            --bs-btn-color: var(--bs-white);
+            --bs-btn-bg: var(--bd-violet-bg);
+            --bs-btn-border-color: var(--bd-violet-bg);
+            --bs-btn-hover-color: var(--bs-white);
+            --bs-btn-hover-bg: #6528e0;
+            --bs-btn-hover-border-color: #6528e0;
+            --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+            --bs-btn-active-color: var(--bs-btn-hover-color);
+            --bs-btn-active-bg: #5a23c8;
+            --bs-btn-active-border-color: #5a23c8;
+        }
 
-      .bd-mode-toggle .dropdown-menu .active .bi {
-        display: block !important;
-      }
+        .bd-mode-toggle {
+            z-index: 1500;
+        }
 
-      /* Custom styles for the table */
-      .info-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-      }
+        .bd-mode-toggle .dropdown-menu .active .bi {
+            display: block !important;
+        }
 
-      .info-table th, .info-table td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: left;
-      }
+        /* Custom styles for the table */
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
 
-      .info-table th {
-        background-color: #f2f2f2;
-        font-weight: bold;
-      }
+        .info-table th,
+        .info-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
 
-      .filter-controls {
-        margin-bottom: 20px;
-        display: flex;
-        gap: 15px;
-        align-items: center;
-      }
+        .info-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
 
-      .filter-controls label {
-        font-weight: bold;
-        margin-right: 5px;
-      }
+        .filter-controls {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
 
-      .filter-controls select {
-        padding: 8px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-      }
+        .filter-controls label {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .filter-controls select {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
     </style>
 
-    
-  </head>
-  <body>
+
+</head>
+
+<body>
     <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
-      <symbol id="check2" viewBox="0 0 16 16">
-        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
-      </symbol>
-      <symbol id="circle-half" viewBox="0 0 16 16">
-        <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
-      </symbol>
-      <symbol id="moon-stars-fill" viewBox="0 0 16 16">
-        <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
-        <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
-      </symbol>
-      <symbol id="sun-fill" viewBox="0 0 16 16">
-        <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
-      </symbol>
+        <symbol id="check2" viewBox="0 0 16 16">
+            <path
+                d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
+        </symbol>
+        <symbol id="circle-half" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z" />
+        </symbol>
+        <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+            <path
+                d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z" />
+            <path
+                d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z" />
+        </symbol>
+        <symbol id="sun-fill" viewBox="0 0 16 16">
+            <path
+                d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z" />
+        </symbol>
     </svg>
 
     <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
-      <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center"
-              id="bd-theme"
-              type="button"
-              aria-expanded="false"
-              data-bs-toggle="dropdown"
-              aria-label="Toggle theme (auto)">
-        <svg class="bi my-1 theme-icon-active" width="1em" height="1em"><use href="#circle-half"></use></svg>
-        <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
-      </button>
-      <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
-        <li>
-          <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
-            <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em"><use href="#sun-fill"></use></svg>
-            Light
-            <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
-          </button>
-        </li>
-        <li>
-          <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
-            <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em"><use href="#moon-stars-fill"></use></svg>
-            Dark
-            <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
-          </button>
-        </li>
-        <li>
-          <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
-            <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em"><use href="#circle-half"></use></svg>
-            Auto
-            <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
-          </button>
-        </li>
-      </ul>
+        <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center" id="bd-theme" type="button"
+            aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme (auto)">
+            <svg class="bi my-1 theme-icon-active" width="1em" height="1em">
+                <use href="#circle-half"></use>
+            </svg>
+            <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
+            <li>
+                <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light"
+                    aria-pressed="false">
+                    <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em">
+                        <use href="#sun-fill"></use>
+                    </svg>
+                    Light
+                    <svg class="bi ms-auto d-none" width="1em" height="1em">
+                        <use href="#check2"></use>
+                    </svg>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark"
+                    aria-pressed="false">
+                    <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em">
+                        <use href="#moon-stars-fill"></use>
+                    </svg>
+                    Dark
+                    <svg class="bi ms-auto d-none" width="1em" height="1em">
+                        <use href="#check2"></use>
+                    </svg>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto"
+                    aria-pressed="true">
+                    <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em">
+                        <use href="#circle-half"></use>
+                    </svg>
+                    Auto
+                    <svg class="bi ms-auto d-none" width="1em" height="1em">
+                        <use href="#check2"></use>
+                    </svg>
+                </button>
+            </li>
+        </ul>
     </div>
 
-    
-<main>
-  <div class="container py-4">
-    <header class="pb-3 mb-4 border-bottom">
-      <a href="/" class="d-flex align-items-center text-body-emphasis text-decoration-none">
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" class="me-2" viewBox="0 0 118 94" role="img"><title>Bootstrap</title><path fill-rule="evenodd" clip-rule="evenodd" d="M24.509 0c-6.733 0-11.715 5.893-11.492 12.284.214 6.14-.064 14.092-2.066 20.577C8.943 39.365 5.547 43.485 0 44.014v5.972c5.547.529 8.943 4.649 10.951 11.153 2.002 6.485 2.28 14.437 2.066 20.577C12.794 88.106 17.776 94 24.51 94H93.5c6.733 0 11.714-5.893 11.491-12.284-.214-6.14.064-14.092 2.066-20.577 2.009-6.504 5.396-10.624 10.943-11.153v-5.972c-5.547-.529-8.934-4.649-10.943-11.153-2.002-6.484-2.28-14.437-2.066-20.577C105.214 5.894 100.233 0 93.5 0H24.508zM80 57.863C80 66.663 73.436 72 62.543 72H44a2 2 0 01-2-2V24a2 2 0 012-2h18.437c9.083 0 15.044 4.92 15.044 12.474 0 5.302-4.01 10.049-9.119 10.88v.277C75.317 46.394 80 51.21 80 57.863zM60.521 28.34H49.948v14.934h8.905c6.884 0 10.68-2.772 10.68-7.727 0-4.643-3.264-7.207-9.012-7.207zM49.948 49.2v16.458H60.91c7.167 0 10.964-2.876 10.964-8.281 0-5.406-3.903-8.178-11.425-8.178H49.948z" fill="currentColor"></path></svg>
-        <span class="fs-4">Daniel's Toolbox</span>
-      </a>
-    </header>
 
-    <div class="p-5 mb-4 bg-body-tertiary rounded-3">
-      <div class="container-fluid py-5">
-        <h1 class="display-5 fw-bold">機油交換量資訊</h1>
-        <p class="col-md-8 fs-4">本頁面提供各廠牌機車的機油和齒輪油交換量參考資訊，方便您進行保養。</p>
-      </div>
-    </div>
+    <main>
+        <div class="container py-4">
+            <header class="pb-3 mb-4 border-bottom">
+                <a href="/" class="d-flex align-items-center text-body-emphasis text-decoration-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" class="me-2" viewBox="0 0 118 94"
+                        role="img">
+                        <title>Bootstrap</title>
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M24.509 0c-6.733 0-11.715 5.893-11.492 12.284.214 6.14-.064 14.092-2.066 20.577C8.943 39.365 5.547 43.485 0 44.014v5.972c5.547.529 8.943 4.649 10.951 11.153 2.002 6.485 2.28 14.437 2.066 20.577C12.794 88.106 17.776 94 24.51 94H93.5c6.733 0 11.714-5.893 11.491-12.284-.214-6.14.064-14.092 2.066-20.577 2.009-6.504 5.396-10.624 10.943-11.153v-5.972c-5.547-.529-8.934-4.649-10.943-11.153-2.002-6.484-2.28-14.437-2.066-20.577C105.214 5.894 100.233 0 93.5 0H24.508zM80 57.863C80 66.663 73.436 72 62.543 72H44a2 2 0 01-2-2V24a2 2 0 012-2h18.437c9.083 0 15.044 4.92 15.044 12.474 0 5.302-4.01 10.049-9.119 10.88v.277C75.317 46.394 80 51.21 80 57.863zM60.521 28.34H49.948v14.934h8.905c6.884 0 10.68-2.772 10.68-7.727 0-4.643-3.264-7.207-9.012-7.207zM49.948 49.2v16.458H60.91c7.167 0 10.964-2.876 10.964-8.281 0-5.406-3.903-8.178-11.425-8.178H49.948z"
+                            fill="currentColor"></path>
+                    </svg>
+                    <span class="fs-4">Daniel's Toolbox</span>
+                </a>
+            </header>
 
-    <div class="row align-items-md-stretch">
-      <div class="col-md-12">
-        <div class="h-100 p-5 bg-body-tertiary border rounded-3">
-          <h2>機油及齒輪油交換量</h2>
-          <div class="filter-controls">
-            <label for="brandFilter">廠牌：</label>
-            <select id="brandFilter" class="form-select"></select>
+            <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+                <div class="container-fluid py-5">
+                    <h1 class="display-5 fw-bold">機油交換量資訊</h1>
+                    <p class="col-md-8 fs-4">本頁面提供各廠牌機車的機油和齒輪油交換量參考資訊，方便您進行保養。</p>
+                </div>
+            </div>
 
-            <label for="displacementFilter">排氣量(CC)：</label>
-            <select id="displacementFilter" class="form-select"></select>
-          </div>
-          <div id="oilInfoTableContainer">
-            <p>載入中...如果長時間未顯示，請確認網路連線或資料來源。</p>
-          </div>
+            <div class="row align-items-md-stretch">
+                <div class="col-md-12">
+                    <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+                        <h2>機油及齒輪油交換量</h2>
+                        <div class="filter-controls">
+                            <label for="brandFilter">廠牌：</label>
+                            <select id="brandFilter" class="form-select"></select>
+
+                            <label for="displacementFilter">排氣量(CC)：</label>
+                            <select id="displacementFilter" class="form-select"></select>
+                        </div>
+                        <div id="oilInfoTableContainer">
+                            <p>載入中...如果長時間未顯示，請確認網路連線或資料來源。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                const csvUrl = "https://raw.githubusercontent.com/DanielTsai117/motor_oil/refs/heads/main/motor_oil_change.csv";
+                const tableContainer = document.getElementById("oilInfoTableContainer");
+                const brandFilter = document.getElementById("brandFilter");
+                const displacementFilter = document.getElementById("displacementFilter");
+
+                let allOilData = []; // Store the full dataset
+
+                async function fetchAndParseCSV() {
+                    try {
+                        const response = await fetch(csvUrl);
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        const csvText = await response.text();
+
+                        const lines = csvText.trim().split('\n');
+                        if (lines.length === 0) {
+                            tableContainer.innerHTML = "<p>無資料可顯示。</p>";
+                            return;
+                        }
+
+                        const headers = lines[0].split(',').map(h => h.trim());
+                        const dataRows = lines.slice(1).map(line => {
+                            const cells = line.split(',').map(c => c.trim());
+                            const row = {};
+                            headers.forEach((header, index) => {
+                                row[header] = cells[index];
+                            });
+                            return row;
+                        });
+
+                        allOilData = dataRows; // Store the parsed data
+                        populateFilters(headers);
+                        applyFilters(); // Display all data initially
+                    } catch (error) {
+                        console.error("Error fetching CSV:", error);
+                        tableContainer.innerHTML = `<p style="color: red;">載入資料失敗：${error.message}，請稍後再試。</p>`;
+                    }
+                }
+
+                function populateFilters(headers) {
+                    const brandIndex = headers.indexOf('廠牌');
+                    const displacementIndex = headers.indexOf('排氣量(CC)');
+
+                    if (brandIndex !== -1) {
+                        const brands = [...new Set(allOilData.map(row => row['廠牌']))].sort();
+                        brandFilter.innerHTML = '<option value="all">所有廠牌</option>';
+                        brands.forEach(brand => {
+                            brandFilter.innerHTML += `<option value="${brand}">${brand}</option>`;
+                        });
+                    }
+
+                    if (displacementIndex !== -1) {
+                        const displacements = [...new Set(allOilData.map(row => row['排氣量(CC)']))].sort((a, b) => parseInt(a) - parseInt(b));
+                        displacementFilter.innerHTML = '<option value="all">所有排氣量</option>';
+                        displacements.forEach(disp => {
+                            displacementFilter.innerHTML += `<option value="${disp}">${disp}</option>`;
+                        });
+                    }
+                }
+
+                function applyFilters() {
+                    const selectedBrand = brandFilter.value;
+                    const selectedDisplacement = displacementFilter.value;
+
+                    let filteredData = allOilData;
+
+                    if (selectedBrand !== "all") {
+                        filteredData = filteredData.filter(row => row['廠牌'] === selectedBrand);
+                    }
+
+                    if (selectedDisplacement !== "all") {
+                        filteredData = filteredData.filter(row => row['排氣量(CC)'] === selectedDisplacement);
+                    }
+
+                    renderTable(filteredData);
+                }
+
+                function renderTable(dataToDisplay) {
+                    if (dataToDisplay.length === 0) {
+                        tableContainer.innerHTML = "<p>無符合條件的資料。</p>";
+                        return;
+                    }
+
+                    const headers = Object.keys(dataToDisplay[0]); // Get headers from the first data row
+
+                    let tableHtml = '<table class="info-table table table-striped table-hover">';
+
+                    // Table Header
+                    tableHtml += '<thead><tr>';
+                    headers.forEach(header => {
+                        tableHtml += `<th>${header.trim()}</th>`;
+                    });
+                    tableHtml += '</tr></thead>';
+
+                    // Table Body
+                    tableHtml += '<tbody>';
+                    dataToDisplay.forEach(row => {
+                        tableHtml += '<tr>';
+                        headers.forEach(header => {
+                            tableHtml += `<td>${row[header] || ''}</td>`; // Display cell content, handle potential undefined
+                        });
+                        tableHtml += '</tr>';
+                    });
+                    tableHtml += '</tbody>';
+                    tableHtml += '</table>';
+
+                    tableContainer.innerHTML = tableHtml;
+                }
+
+                // Event Listeners for filters
+                brandFilter.addEventListener('change', applyFilters);
+                displacementFilter.addEventListener('change', applyFilters);
+
+                // Call the function to fetch and display CSV when the page loads
+                document.addEventListener('DOMContentLoaded', fetchAndParseCSV);
+            </script>
+
+            <footer class="pt-3 mt-4 text-body-secondary border-top">
+                &copy; 2024 by Daniel, which is Me, myself of course.
+            </footer>
         </div>
-      </div>
-    </div>
+    </main>
+    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script>
-      const csvUrl = "https://raw.githubusercontent.com/DanielTsai117/motor_oil/refs/heads/main/motor_oil_change.csv";
-      const tableContainer = document.getElementById("oilInfoTableContainer");
-      const brandFilter = document.getElementById("brandFilter");
-      const displacementFilter = document.getElementById("displacementFilter");
+</body>
 
-      let allOilData = []; // Store the full dataset
-
-      async function fetchAndParseCSV() {
-        try {
-          const response = await fetch(csvUrl);
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          const csvText = await response.text();
-          
-          const lines = csvText.trim().split('\n');
-          if (lines.length === 0) {
-            tableContainer.innerHTML = "<p>無資料可顯示。</p>";
-            return;
-          }
-
-          const headers = lines[0].split(',').map(h => h.trim());
-          const dataRows = lines.slice(1).map(line => {
-            const cells = line.split(',').map(c => c.trim());
-            const row = {};
-            headers.forEach((header, index) => {
-              row[header] = cells[index];
-            });
-            return row;
-          });
-
-          allOilData = dataRows; // Store the parsed data
-          populateFilters(headers);
-          applyFilters(); // Display all data initially
-        } catch (error) {
-          console.error("Error fetching CSV:", error);
-          tableContainer.innerHTML = `<p style="color: red;">載入資料失敗：${error.message}，請稍後再試。</p>`;
-        }
-      }
-
-      function populateFilters(headers) {
-        const brandIndex = headers.indexOf('廠牌');
-        const displacementIndex = headers.indexOf('排氣量(CC)');
-
-        if (brandIndex !== -1) {
-          const brands = [...new Set(allOilData.map(row => row['廠牌']))].sort();
-          brandFilter.innerHTML = '<option value="all">所有廠牌</option>';
-          brands.forEach(brand => {
-            brandFilter.innerHTML += `<option value="${brand}">${brand}</option>`;
-          });
-        }
-
-        if (displacementIndex !== -1) {
-          const displacements = [...new Set(allOilData.map(row => row['排氣量(CC)']))].sort((a, b) => parseInt(a) - parseInt(b));
-          displacementFilter.innerHTML = '<option value="all">所有排氣量</option>';
-          displacements.forEach(disp => {
-            displacementFilter.innerHTML += `<option value="${disp}">${disp}</option>`;
-          });
-        }
-      }
-
-      function applyFilters() {
-        const selectedBrand = brandFilter.value;
-        const selectedDisplacement = displacementFilter.value;
-
-        let filteredData = allOilData;
-
-        if (selectedBrand !== "all") {
-          filteredData = filteredData.filter(row => row['廠牌'] === selectedBrand);
-        }
-
-        if (selectedDisplacement !== "all") {
-          filteredData = filteredData.filter(row => row['排氣量(CC)'] === selectedDisplacement);
-        }
-
-        renderTable(filteredData);
-      }
-
-      function renderTable(dataToDisplay) {
-        if (dataToDisplay.length === 0) {
-          tableContainer.innerHTML = "<p>無符合條件的資料。</p>";
-          return;
-        }
-
-        const headers = Object.keys(dataToDisplay[0]); // Get headers from the first data row
-
-        let tableHtml = '<table class="info-table table table-striped table-hover">';
-        
-        // Table Header
-        tableHtml += '<thead><tr>';
-        headers.forEach(header => {
-          tableHtml += `<th>${header.trim()}</th>`;
-        });
-        tableHtml += '</tr></thead>';
-
-        // Table Body
-        tableHtml += '<tbody>';
-        dataToDisplay.forEach(row => {
-          tableHtml += '<tr>';
-          headers.forEach(header => {
-            tableHtml += `<td>${row[header] || ''}</td>`; // Display cell content, handle potential undefined
-          });
-          tableHtml += '</tr>';
-        });
-        tableHtml += '</tbody>';
-        tableHtml += '</table>';
-
-        tableContainer.innerHTML = tableHtml;
-      }
-
-      // Event Listeners for filters
-      brandFilter.addEventListener('change', applyFilters);
-      displacementFilter.addEventListener('change', applyFilters);
-
-      // Call the function to fetch and display CSV when the page loads
-      document.addEventListener('DOMContentLoaded', fetchAndParseCSV);
-    </script>
-
-    <footer class="pt-3 mt-4 text-body-secondary border-top">
-      &copy; 2024 by Daniel, which is Me, myself of course.
-    </footer>
-  </div>
-</main>
-<script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
-
-    </body>
 </html>
