@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>名片上傳與辨識</title>
+</head>
+<body>
+    <h1>名片上傳與辨識</h1>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" id="fileInput" accept="image/*" required>
+        <button type="submit">上傳名片</button>
+    </form>
+
+    <h2>辨識結果：</h2>
+    <pre id="result"></pre>
+
+    <script>
+        const form = document.getElementById('uploadForm');
+        const resultElement = document.getElementById('result');
+        
+        form.onsubmit = async (event) => {
+            event.preventDefault();
+            
+            const fileInput = document.getElementById('fileInput');
+            const formData = new FormData();
+            formData.append("image", fileInput.files[0]);
+            
+            const response = await fetch('/upload', {
+                method: 'POST',
+                body: formData
+            });
+            
+            const data = await response.json();
+            resultElement.textContent = JSON.stringify(data, null, 2);
+        };
+    </script>
+</body>
+</html>
