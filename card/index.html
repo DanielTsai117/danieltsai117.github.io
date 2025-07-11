@@ -27,7 +27,7 @@
             formData.append('file', file);
 
             try {
-                const response = await fetch('https://your-cloud-run-url.com/upload', {  // 使用 Cloud Run 的 URL
+                const response = await fetch('https://card-614604095631.europe-west1.run.app/uploadBusinessCard', {  // 更新為 Cloud Function 的 URL
                     method: 'POST',
                     body: formData,
                 });
